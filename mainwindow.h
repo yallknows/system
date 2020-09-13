@@ -5,6 +5,9 @@
 
 #include <QMainWindow>
 
+#include <QtSql>
+#include <QSqlDatabase>
+
 namespace Ui
 {
     class MainWindow;
@@ -17,6 +20,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+private slots:
+    void on_database_connection_clicked();
 
 private:
     Ui::MainWindow *ui;
