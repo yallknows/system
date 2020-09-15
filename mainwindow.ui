@@ -23,23 +23,43 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Information system</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="sources.qrc">
+    <normaloff>:/images/src/img/icon.png</normaloff>:/images/src/img/icon.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#centralwidget
+{
+	border-image: url(:/images/src/img/background.jpg);
+}
+
+#statusbar
+{
+	border-image: url(:/images/src/img/statusbar.jpg);
+}
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="database_connection">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <widget class="QPushButton" name="pushButton_database_connection_check">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>131</width>
+      <width>161</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>Database connection</string>
+     <string>Check database connection</string>
     </property>
    </widget>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
@@ -49,9 +69,13 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="nativeMenuBar">
+    <bool>true</bool>
+   </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="sources.qrc"/>
+ </resources>
  <connections/>
 </ui>

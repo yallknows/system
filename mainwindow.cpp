@@ -12,10 +12,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_database_connection_clicked()
+void MainWindow::on_pushButton_database_connection_check_clicked()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL", "check");
     db.setHostName("localhost");
     db.setUserName("root");
     db.setPassword("");
@@ -24,9 +23,12 @@ void MainWindow::on_database_connection_clicked()
     if (db.open())
     {
         ui->statusbar->showMessage("Database succesfully connected!");
+        db.close();
     }
     else
     {
         ui->statusbar->showMessage("Failed to connect to database!");
     }
 }
+
+//system("systeminfo >> text.txt"); // Windows

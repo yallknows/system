@@ -4,9 +4,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
 #include <QtSql>
-#include <QSqlDatabase>
 
 namespace Ui
 {
@@ -22,7 +20,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_database_connection_clicked();
+    void on_pushButton_database_connection_check_clicked();
 
 private:
     Ui::MainWindow *ui;
