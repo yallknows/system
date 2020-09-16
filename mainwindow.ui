@@ -32,12 +32,12 @@
   <property name="styleSheet">
    <string notr="true">#centralwidget
 {
-	border-image: url(:/images/src/img/background.jpg);
+	border-image: url(:/images/src/img/background_mainwindow.jpg);
 }
 
 #statusbar
 {
-	border-image: url(:/images/src/img/statusbar.jpg);
+	border-image: url(:/images/src/img/statusbar_mainwindow.jpg);
 }
 </string>
   </property>
@@ -58,6 +58,32 @@
      <string>Check database connection</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_insert_to_database">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>30</y>
+      <width>161</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Insert to database</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_search_in_database">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>60</y>
+      <width>161</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Search in database</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
@@ -66,7 +92,7 @@
      <x>0</x>
      <y>0</y>
      <width>720</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="nativeMenuBar">
