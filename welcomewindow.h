@@ -23,8 +23,6 @@ public:
 private slots:
     void on_pushButton_login_clicked();
 
-    void on_pushButton_show_text_clicked();
-
 private:
     Ui::WelcomeWindow* welcome_ui = nullptr;
     MainWindow* mMainWindow = nullptr;

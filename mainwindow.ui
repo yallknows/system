@@ -22,6 +22,11 @@
     <height>0</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <family>Franklin Gothic Medium</family>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Information system</string>
   </property>
@@ -39,25 +44,42 @@
 {
 	border-image: url(:/images/src/img/statusbar_mainwindow.jpg);
 }
+
+#pushButton_insert_to_database
+{
+	border-radius:3px;
+	background-color:rgb(140, 140, 140);
+}
+
+#pushButton_insert_to_database:hover
+{
+	background-color:rgb(30, 170, 145);
+}
+
+#pushButton_search_in_database
+{
+	border-radius:3px;
+	background-color:rgb(140, 140, 140);
+}
+
+#pushButton_search_in_database:hover
+{
+	background-color:rgb(30, 170, 145);
+}
 </string>
   </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="font">
+    <font>
+     <family>Franklin Gothic Medium</family>
+    </font>
+   </property>
    <property name="styleSheet">
     <string notr="true"/>
    </property>
-   <widget class="QPushButton" name="pushButton_database_connection_check">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>161</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Check database connection</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_insert_to_database">
     <property name="geometry">
      <rect>
@@ -66,6 +88,11 @@
       <width>161</width>
       <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Franklin Gothic Medium</family>
+     </font>
     </property>
     <property name="text">
      <string>Insert to database</string>
@@ -80,20 +107,38 @@
       <height>21</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Franklin Gothic Medium</family>
+     </font>
+    </property>
     <property name="text">
      <string>Search in database</string>
     </property>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="font">
+    <font>
+     <family>Franklin Gothic Medium</family>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>720</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Franklin Gothic Medium</family>
+     <pointsize>9</pointsize>
+    </font>
    </property>
    <property name="nativeMenuBar">
     <bool>true</bool>

@@ -16,8 +16,21 @@
     <height>320</height>
    </size>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>480</width>
+    <height>320</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Franklin Gothic Medium</family>
+    <weight>50</weight>
+    <bold>false</bold>
+   </font>
+  </property>
   <property name="windowTitle">
-   <string>Information system sing in</string>
+   <string>Information system login</string>
   </property>
   <property name="windowIcon">
    <iconset resource="sources.qrc">
@@ -26,7 +39,6 @@
   <property name="styleSheet">
    <string notr="true">#widget_background
 {
-	
 	border-image: url(:/images/src/img/background_welcomewindow.jpg);
 }
 
@@ -34,7 +46,24 @@
 {
 	border-image: url(:/images/src/img/statusbar_welcomewindow.jpg);
 }
+
+#pushButton_login
+{
+	border-radius:3px;
+	background-color:rgb(140, 140, 140);
+}
+
+#pushButton_login:hover
+{
+	background-color:rgb(30, 170, 145);
+}
 </string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="widget_statusbar" native="true">
    <property name="geometry">
@@ -44,6 +73,12 @@
      <width>480</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Franklin Gothic Medium</family>
+     <pointsize>9</pointsize>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true"/>
@@ -58,7 +93,12 @@
      <height>298</height>
     </rect>
    </property>
-   <widget class="QGroupBox" name="groupBox">
+   <property name="font">
+    <font>
+     <family>Franklin Gothic Medium</family>
+    </font>
+   </property>
+   <widget class="QGroupBox" name="groupBox_login_to_database">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -67,43 +107,72 @@
       <height>111</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Franklin Gothic Medium</family>
+      <pointsize>10</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="title">
-     <string>Sing in</string>
+     <string>Login to database</string>
     </property>
     <widget class="QPushButton" name="pushButton_login">
      <property name="geometry">
       <rect>
-       <x>140</x>
+       <x>150</x>
        <y>80</y>
        <width>171</width>
        <height>21</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <family>Franklin Gothic Medium</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="text">
-      <string>Sign in</string>
+      <string>Login</string>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>20</x>
        <y>20</y>
        <width>341</width>
-       <height>52</height>
+       <height>58</height>
       </rect>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="verticalLayout_login_input">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QHBoxLayout" name="horizontalLayout_username">
         <item>
-         <widget class="QLabel" name="label">
+         <widget class="QLabel" name="label_username">
+          <property name="font">
+           <font>
+            <family>Franklin Gothic Medium</family>
+           </font>
+          </property>
           <property name="text">
            <string>Login         </string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit">
+         <widget class="QLineEdit" name="lineEdit_username">
+          <property name="font">
+           <font>
+            <family>Franklin Gothic Medium</family>
+           </font>
+          </property>
           <property name="placeholderText">
            <string>Enter your login</string>
           </property>
@@ -112,16 +181,26 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <layout class="QHBoxLayout" name="horizontalLayout_password">
         <item>
-         <widget class="QLabel" name="label_2">
+         <widget class="QLabel" name="label_password">
+          <property name="font">
+           <font>
+            <family>Franklin Gothic Medium</family>
+           </font>
+          </property>
           <property name="text">
            <string>Password  </string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_2">
+         <widget class="QLineEdit" name="lineEdit_password">
+          <property name="font">
+           <font>
+            <family>Franklin Gothic Medium</family>
+           </font>
+          </property>
           <property name="echoMode">
            <enum>QLineEdit::Password</enum>
           </property>
@@ -135,19 +214,6 @@
      </layout>
     </widget>
    </widget>
-   <widget class="QPushButton" name="pushButton_show_text">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>270</y>
-      <width>80</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Show text</string>
-    </property>
-   </widget>
   </widget>
   <widget class="QLabel" name="label_statusbar">
    <property name="geometry">
@@ -157,6 +223,12 @@
      <width>480</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Franklin Gothic Medium</family>
+     <pointsize>9</pointsize>
+    </font>
    </property>
    <property name="text">
     <string/>
