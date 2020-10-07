@@ -1,10 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(const QString& databaseLogin, const QString& databasePassword, QWidget *parent)
-    : QMainWindow(parent), main_ui(new Ui::MainWindow), mDatabaseLogin(databaseLogin), mDatabasePassword(databasePassword)
+MainWindow::MainWindow(const QString& databaseLogin, const QString& databasePassword, QWidget* parent)
+    : QMainWindow(parent), mMain_ui(new Ui::MainWindow), mDatabaseLogin(databaseLogin), mDatabasePassword(databasePassword)
 {
-    this->main_ui->setupUi(this);
+    mMain_ui->setupUi(this);
 
     mDatabase = QSqlDatabase::addDatabase("QMYSQL", "information_system_data");
     mDatabase.setHostName("localhost");
@@ -14,104 +14,155 @@ MainWindow::MainWindow(const QString& databaseLogin, const QString& databasePass
 
     if (!mDatabase.open())
     {
-        this->main_ui->statusbar->showMessage("Failed to connect to database!");
+        mMain_ui->statusbar->showMessage("Failed to connect to database!");
         return;
     }
 
-    this->main_ui->statusbar->showMessage("Database succesfully connected!");
+    mMain_ui->statusbar->showMessage("Database succesfully connected!");
+
+    mQueryModel = new QSqlQueryModel();
+    mQueryModel->setQuery("SELECT * FROM `operations`", mDatabase);
+
+    mQueryModel->setHeaderData(0, Qt::Horizontal, tr("Id"));
+    mQueryModel->setHeaderData(1, Qt::Horizontal, tr("From"));
+    mQueryModel->setHeaderData(2, Qt::Horizontal, tr("To"));
+    mQueryModel->setHeaderData(3, Qt::Horizontal, tr("Sum"));
+    mQueryModel->setHeaderData(4, Qt::Horizontal, tr("Date"));
+
+    mMain_ui->tableView_data_from_database->setModel(mQueryModel);
 }
 
 MainWindow::~MainWindow()
 {
-    if (this->main_ui != nullptr)
+    if (mMain_ui != nullptr)
     {
-        delete this->main_ui;
+        delete mMain_ui;
+        mMain_ui = nullptr;
     }
 
     if (mDatabase.open())
     {
         mDatabase.close();
     }
+
+    if (mQueryModel != nullptr)
+    {
+        delete mQueryModel;
+        mQueryModel = nullptr;
+    }
+
+    if (mTableModel != nullptr)
+    {
+        delete mTableModel;
+        mTableModel = nullptr;
+    }
 }
 
-void MainWindow::on_pushButton_insert_to_database_clicked()
+void MainWindow::on_pushButton_retry_database_connection_clicked()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL", "connection");
-    db.setHostName("localhost");
-    db.setUserName("root");
-    db.setPassword("");
-    db.setDatabaseName("system");
-
-    if (!db.open())
+    if (mDatabase.open())
     {
-        this->main_ui->statusbar->showMessage("Failed to connect to database!");
+        mDatabase.close();
+    }
+
+    mDatabase = QSqlDatabase::addDatabase("QMYSQL", "information_system_data");
+    mDatabase.setHostName("localhost");
+    mDatabase.setUserName(mDatabaseLogin);
+    mDatabase.setPassword(mDatabasePassword);
+    mDatabase.setDatabaseName("information_system");
+
+    if (!mDatabase.open())
+    {
+        mMain_ui->statusbar->showMessage("Failed to connect to database!");
         return;
     }
 
-    this->main_ui->statusbar->showMessage("Database succesfully connected!");
+    mMain_ui->statusbar->showMessage("Database succesfully connected!");
 
-    QSqlQuery query(QSqlDatabase::database("connection"));
-    query.prepare("SELECT * FFROM operations WHERE client_code = :client_code AND"
-                      "employee_code = :employee_code AND cost = :cost AND date = :date");
-
-    query.bindValue(":client_code", "11");
-    query.bindValue(":employee_code", "1");
-    query.bindValue(":cost", "53.12");
-    query.bindValue(":date", "2020-09-16 12:14:54");
-
-    if (!query.exec())
+    if (mMain_ui->label_current_mode->text() == "You are using reading mode.")
     {
-        this->main_ui->statusbar->showMessage("Failed to insert data!");
-        db.close();
-        return;
+        if (mQueryModel != nullptr)
+        {
+            delete mQueryModel;
+            mQueryModel = nullptr;
+        }
+
+        mQueryModel = new QSqlQueryModel();
+        mQueryModel->setQuery("SELECT * FROM `operations`", mDatabase);
+
+        mQueryModel->setHeaderData(0, Qt::Horizontal, tr("Id"));
+        mQueryModel->setHeaderData(1, Qt::Horizontal, tr("From"));
+        mQueryModel->setHeaderData(2, Qt::Horizontal, tr("To"));
+        mQueryModel->setHeaderData(3, Qt::Horizontal, tr("Sum"));
+        mQueryModel->setHeaderData(4, Qt::Horizontal, tr("Date"));
+
+        mMain_ui->tableView_data_from_database->setModel(mQueryModel);
     }
+    else if (mMain_ui->label_current_mode->text() == "You are using edit mode.")
+    {
+        if (mTableModel != nullptr)
+        {
+            delete mTableModel;
+            mTableModel = nullptr;
+        }
 
-    this->main_ui->statusbar->showMessage("Data succesfully inserted!");
+        mTableModel = new QSqlTableModel(nullptr, mDatabase);
+        mTableModel->setTable("`operations`");
+        mTableModel->select();
 
-    db.close();
+        mTableModel->setHeaderData(0, Qt::Horizontal, tr("Id"));
+        mTableModel->setHeaderData(1, Qt::Horizontal, tr("From"));
+        mTableModel->setHeaderData(2, Qt::Horizontal, tr("To"));
+        mTableModel->setHeaderData(3, Qt::Horizontal, tr("Sum"));
+        mTableModel->setHeaderData(4, Qt::Horizontal, tr("Date"));
+
+        mMain_ui->tableView_data_from_database->setModel(mTableModel);
+    }
 }
 
-void MainWindow::on_pushButton_search_in_database_clicked()
+void MainWindow::on_pushButton_change_mode_clicked()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL", "connection");
-    db.setHostName("localhost");
-    db.setUserName("root");
-    db.setPassword("");
-    db.setDatabaseName("system");
-
-    if (!db.open())
+    if (mMain_ui->label_current_mode->text() == "You are using reading mode.")
     {
-        this->main_ui->statusbar->showMessage("Failed to connect to database!");
-        return;
-    }
-
-    QSqlQuery query(QSqlDatabase::database("connection"));
-    query.prepare("SELECT * FFROM operations WHERE date = :date");
-
-    QString date = "2020-09-13 18:54:24";
-
-    query.bindValue(":date", date);
-
-    if (!query.exec())
-    {
-        this->main_ui->statusbar->showMessage("Failed to search data!");
-        db.close();
-        return;
-    }
-
-    while (query.next())
-    {
-        QString dateFromDB = query.value(1).toString();
-
-        if (dateFromDB != date)
+        if (mQueryModel != nullptr)
         {
-            this->main_ui->statusbar->showMessage("Failed to find data!");
+            delete mQueryModel;
+            mQueryModel = nullptr;
         }
-        else
-        {
-            this->main_ui->statusbar->showMessage("Data succesfully founded!");
-        }
-    }
 
-    db.close();
+        mTableModel = new QSqlTableModel(nullptr, mDatabase);
+        mTableModel->setTable("`operations`");
+        mTableModel->select();
+
+        mTableModel->setHeaderData(0, Qt::Horizontal, tr("Id"));
+        mTableModel->setHeaderData(1, Qt::Horizontal, tr("From"));
+        mTableModel->setHeaderData(2, Qt::Horizontal, tr("To"));
+        mTableModel->setHeaderData(3, Qt::Horizontal, tr("Sum"));
+        mTableModel->setHeaderData(4, Qt::Horizontal, tr("Date"));
+
+        mMain_ui->tableView_data_from_database->setModel(mTableModel);
+
+        mMain_ui->label_current_mode->setText("You are using edit mode.");
+    }
+    else if (mMain_ui->label_current_mode->text() == "You are using edit mode.")
+    {
+        if (mTableModel != nullptr)
+        {
+            delete mTableModel;
+            mTableModel = nullptr;
+        }
+
+        mQueryModel = new QSqlQueryModel();
+        mQueryModel->setQuery("SELECT * FROM `operations`", mDatabase);
+
+        mQueryModel->setHeaderData(0, Qt::Horizontal, tr("Id"));
+        mQueryModel->setHeaderData(1, Qt::Horizontal, tr("From"));
+        mQueryModel->setHeaderData(2, Qt::Horizontal, tr("To"));
+        mQueryModel->setHeaderData(3, Qt::Horizontal, tr("Sum"));
+        mQueryModel->setHeaderData(4, Qt::Horizontal, tr("Date"));
+
+        mMain_ui->tableView_data_from_database->setModel(mQueryModel);
+
+        mMain_ui->label_current_mode->setText("You are using reading mode.");
+    }
 }

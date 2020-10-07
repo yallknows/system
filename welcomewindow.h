@@ -17,14 +17,14 @@ class WelcomeWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit WelcomeWindow(QWidget *parent = nullptr);
+    explicit WelcomeWindow(QWidget* parent = nullptr);
     ~WelcomeWindow();
 
 private slots:
     void on_pushButton_login_clicked();
 
 private:
-    Ui::WelcomeWindow* welcome_ui = nullptr;
+    Ui::WelcomeWindow* mWelcome_ui = nullptr;
     MainWindow* mMainWindow = nullptr;
 };
 

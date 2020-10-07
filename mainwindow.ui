@@ -45,24 +45,30 @@
 	border-image: url(:/images/src/img/statusbar_mainwindow.jpg);
 }
 
-#pushButton_insert_to_database
+#tableView_data_from_database
+{
+	
+	background-color:rgb(234, 255, 228);
+}
+
+#pushButton_retry_database_connection
 {
 	border-radius:3px;
 	background-color:rgb(140, 140, 140);
 }
 
-#pushButton_insert_to_database:hover
+#pushButton_retry_database_connection:hover
 {
 	background-color:rgb(30, 170, 145);
 }
 
-#pushButton_search_in_database
+#pushButton_change_mode
 {
 	border-radius:3px;
 	background-color:rgb(140, 140, 140);
 }
 
-#pushButton_search_in_database:hover
+#pushButton_change_mode:hover
 {
 	background-color:rgb(30, 170, 145);
 }
@@ -80,31 +86,28 @@
    <property name="styleSheet">
     <string notr="true"/>
    </property>
-   <widget class="QPushButton" name="pushButton_insert_to_database">
+   <widget class="QTableView" name="tableView_data_from_database">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>30</y>
-      <width>161</width>
-      <height>21</height>
+      <x>20</x>
+      <y>20</y>
+      <width>681</width>
+      <height>301</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Franklin Gothic Medium</family>
      </font>
-    </property>
-    <property name="text">
-     <string>Insert to database</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_search_in_database">
+   <widget class="QGroupBox" name="groupBox_actions">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>60</y>
-      <width>161</width>
-      <height>21</height>
+      <x>20</x>
+      <y>350</y>
+      <width>371</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -112,9 +115,82 @@
       <family>Franklin Gothic Medium</family>
      </font>
     </property>
-    <property name="text">
-     <string>Search in database</string>
+    <property name="title">
+     <string>Actions</string>
     </property>
+    <widget class="QPushButton" name="pushButton_retry_database_connection">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>161</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Franklin Gothic Medium</family>
+      </font>
+     </property>
+     <property name="text">
+      <string>Retry database connection</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_change_mode">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>20</y>
+       <width>161</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Franklin Gothic Medium</family>
+      </font>
+     </property>
+     <property name="text">
+      <string>Change mode</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_mode">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>350</y>
+      <width>201</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Franklin Gothic Medium</family>
+     </font>
+    </property>
+    <property name="title">
+     <string>Mode</string>
+    </property>
+    <widget class="QLabel" name="label_current_mode">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>161</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Franklin Gothic Medium</family>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>You are using reading mode.</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar">
