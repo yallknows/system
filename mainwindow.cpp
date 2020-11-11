@@ -7,10 +7,10 @@ MainWindow::MainWindow(const QString& databaseLogin, const QString& databasePass
     mMain_ui->setupUi(this);
 
     mDatabase = QSqlDatabase::addDatabase("QMYSQL", "information_system_data");
-    mDatabase.setHostName("localhost");
+    mDatabase.setHostName(mHosteName);
     mDatabase.setUserName(mDatabaseLogin);
     mDatabase.setPassword(mDatabasePassword);
-    mDatabase.setDatabaseName("information_system");
+    mDatabase.setDatabaseName(mDatabaseName);
 
     if (!mDatabase.open())
     {
@@ -21,14 +21,7 @@ MainWindow::MainWindow(const QString& databaseLogin, const QString& databasePass
     mMain_ui->statusbar->showMessage("Database succesfully connected!");
 
     mQueryModel = new QSqlQueryModel();
-    mQueryModel->setQuery("SELECT * FROM `operations`", mDatabase);
-
-    mQueryModel->setHeaderData(0, Qt::Horizontal, tr("Id"));
-    mQueryModel->setHeaderData(1, Qt::Horizontal, tr("From"));
-    mQueryModel->setHeaderData(2, Qt::Horizontal, tr("To"));
-    mQueryModel->setHeaderData(3, Qt::Horizontal, tr("Sum"));
-    mQueryModel->setHeaderData(4, Qt::Horizontal, tr("Date"));
-
+    setup_select_all_queryModel(mQueryModel);
     mMain_ui->tableView_data_from_database->setModel(mQueryModel);
 }
 
@@ -66,10 +59,10 @@ void MainWindow::on_pushButton_retry_database_connection_clicked()
     }
 
     mDatabase = QSqlDatabase::addDatabase("QMYSQL", "information_system_data");
-    mDatabase.setHostName("localhost");
+    mDatabase.setHostName(mHosteName);
     mDatabase.setUserName(mDatabaseLogin);
     mDatabase.setPassword(mDatabasePassword);
-    mDatabase.setDatabaseName("information_system");
+    mDatabase.setDatabaseName(mDatabaseName);
 
     if (!mDatabase.open())
     {
@@ -88,14 +81,7 @@ void MainWindow::on_pushButton_retry_database_connection_clicked()
         }
 
         mQueryModel = new QSqlQueryModel();
-        mQueryModel->setQuery("SELECT * FROM `operations`", mDatabase);
-
-        mQueryModel->setHeaderData(0, Qt::Horizontal, tr("Id"));
-        mQueryModel->setHeaderData(1, Qt::Horizontal, tr("From"));
-        mQueryModel->setHeaderData(2, Qt::Horizontal, tr("To"));
-        mQueryModel->setHeaderData(3, Qt::Horizontal, tr("Sum"));
-        mQueryModel->setHeaderData(4, Qt::Horizontal, tr("Date"));
-
+        setup_select_all_queryModel(mQueryModel);
         mMain_ui->tableView_data_from_database->setModel(mQueryModel);
     }
     else if (mMain_ui->label_current_mode->text() == "You are using edit mode.")
@@ -107,15 +93,7 @@ void MainWindow::on_pushButton_retry_database_connection_clicked()
         }
 
         mTableModel = new QSqlTableModel(nullptr, mDatabase);
-        mTableModel->setTable("`operations`");
-        mTableModel->select();
-
-        mTableModel->setHeaderData(0, Qt::Horizontal, tr("Id"));
-        mTableModel->setHeaderData(1, Qt::Horizontal, tr("From"));
-        mTableModel->setHeaderData(2, Qt::Horizontal, tr("To"));
-        mTableModel->setHeaderData(3, Qt::Horizontal, tr("Sum"));
-        mTableModel->setHeaderData(4, Qt::Horizontal, tr("Date"));
-
+        setup_select_all_tableModel(mTableModel);
         mMain_ui->tableView_data_from_database->setModel(mTableModel);
     }
 }
@@ -131,15 +109,7 @@ void MainWindow::on_pushButton_change_mode_clicked()
         }
 
         mTableModel = new QSqlTableModel(nullptr, mDatabase);
-        mTableModel->setTable("`operations`");
-        mTableModel->select();
-
-        mTableModel->setHeaderData(0, Qt::Horizontal, tr("Id"));
-        mTableModel->setHeaderData(1, Qt::Horizontal, tr("From"));
-        mTableModel->setHeaderData(2, Qt::Horizontal, tr("To"));
-        mTableModel->setHeaderData(3, Qt::Horizontal, tr("Sum"));
-        mTableModel->setHeaderData(4, Qt::Horizontal, tr("Date"));
-
+        setup_select_all_tableModel(mTableModel);
         mMain_ui->tableView_data_from_database->setModel(mTableModel);
 
         mMain_ui->label_current_mode->setText("You are using edit mode.");
@@ -153,16 +123,83 @@ void MainWindow::on_pushButton_change_mode_clicked()
         }
 
         mQueryModel = new QSqlQueryModel();
-        mQueryModel->setQuery("SELECT * FROM `operations`", mDatabase);
-
-        mQueryModel->setHeaderData(0, Qt::Horizontal, tr("Id"));
-        mQueryModel->setHeaderData(1, Qt::Horizontal, tr("From"));
-        mQueryModel->setHeaderData(2, Qt::Horizontal, tr("To"));
-        mQueryModel->setHeaderData(3, Qt::Horizontal, tr("Sum"));
-        mQueryModel->setHeaderData(4, Qt::Horizontal, tr("Date"));
-
+        setup_select_all_queryModel(mQueryModel);
         mMain_ui->tableView_data_from_database->setModel(mQueryModel);
 
         mMain_ui->label_current_mode->setText("You are using reading mode.");
     }
+}
+
+void MainWindow::on_pushButton_search_clicked()
+{
+    QString searchRequest = mMain_ui->lineEdit_search_request->text();
+
+    if (mMain_ui->label_current_mode->text() == "You are using reading mode.")
+    {
+        if (mQueryModel != nullptr)
+        {
+            delete mQueryModel;
+            mQueryModel = nullptr;
+        }
+
+        mQueryModel = new QSqlQueryModel();
+        setup_search_queryModel(mQueryModel, searchRequest);
+        mMain_ui->tableView_data_from_database->setModel(mQueryModel);
+    }
+    else if (mMain_ui->label_current_mode->text() == "You are using edit mode.")
+    {
+        if (mTableModel != nullptr)
+        {
+            delete mTableModel;
+            mTableModel = nullptr;
+        }
+
+        mTableModel = new QSqlTableModel(nullptr, mDatabase);
+        setup_search_tableModel(mTableModel, searchRequest);
+        mMain_ui->tableView_data_from_database->setModel(mTableModel);
+    }
+}
+
+void MainWindow::setup_select_all_queryModel(QSqlQueryModel* const queryModel) const
+{
+    queryModel->setQuery("SELECT * FROM `operations`", mDatabase);
+    setup_headers_queryModel(queryModel);
+}
+
+void MainWindow::setup_select_all_tableModel(QSqlTableModel* const tableModel) const
+{
+    tableModel->setTable("`operations`");
+    tableModel->select();
+    setup_headers_tableModel(tableModel);
+}
+
+void MainWindow::setup_search_queryModel(QSqlQueryModel* const queryModel, const QString& searchRequest) const
+{
+    queryModel->setQuery("SELECT * FROM `operations`", mDatabase);
+    setup_headers_queryModel(queryModel);
+}
+
+void MainWindow::setup_search_tableModel(QSqlTableModel* const tableModel, const QString& searchRequest) const
+{
+    tableModel->setTable("`operations`");
+    tableModel->select();
+    setup_headers_tableModel(tableModel);
+}
+
+void MainWindow::setup_headers_queryModel(QSqlQueryModel* const queryModel) const
+{
+    queryModel->setHeaderData(0, Qt::Horizontal, tr("Id"));
+    queryModel->setHeaderData(1, Qt::Horizontal, tr("From"));
+    queryModel->setHeaderData(2, Qt::Horizontal, tr("To"));
+    queryModel->setHeaderData(3, Qt::Horizontal, tr("Sum"));
+    queryModel->setHeaderData(4, Qt::Horizontal, tr("Date"));
+}
+
+void MainWindow::setup_headers_tableModel(QSqlTableModel* const tableModel) const
+{
+    tableModel->setHeaderData(0, Qt::Horizontal, tr("Id"));
+    tableModel->setHeaderData(1, Qt::Horizontal, tr("From"));
+    tableModel->setHeaderData(2, Qt::Horizontal, tr("To"));
+    tableModel->setHeaderData(3, Qt::Horizontal, tr("Sum"));
+    tableModel->setHeaderData(4, Qt::Horizontal, tr("Date"));
 }

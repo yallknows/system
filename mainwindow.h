@@ -25,14 +25,25 @@ private slots:
 
     void on_pushButton_change_mode_clicked();
 
-private:
-    Ui::MainWindow* mMain_ui = nullptr;
+    void on_pushButton_search_clicked();
 
-    QString mDatabaseLogin, mDatabasePassword;
-    QSqlDatabase mDatabase;
+private:
+    void setup_select_all_queryModel(QSqlQueryModel* const queryModel) const;
+    void setup_select_all_tableModel(QSqlTableModel* const tableModel) const;
+
+    void setup_search_queryModel(QSqlQueryModel* const queryModel, const QString& searchRequest) const;
+    void setup_search_tableModel(QSqlTableModel* const tableModel, const QString& searchRequest) const;
+
+    void setup_headers_queryModel(QSqlQueryModel* const queryModel) const;
+    void setup_headers_tableModel(QSqlTableModel* const tableModel) const;
+
+    Ui::MainWindow* mMain_ui = nullptr;
 
     QSqlQueryModel* mQueryModel = nullptr;
     QSqlTableModel* mTableModel = nullptr;
+
+    QString mHosteName = "localhost", mDatabaseName = "information_system", mDatabaseLogin, mDatabasePassword;
+    QSqlDatabase mDatabase;
 };
 
 #endif // MAINWINDOW_H

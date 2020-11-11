@@ -26,6 +26,8 @@ private slots:
 private:
     Ui::WelcomeWindow* mWelcome_ui = nullptr;
     MainWindow* mMainWindow = nullptr;
+
+    QString mHosteName = "localhost", mDatabaseName = "information_system";
 };
 
 #endif // WELCOMEWINDOW_H

@@ -42,10 +42,10 @@ void WelcomeWindow::on_pushButton_login_clicked()
     }
 
     QSqlDatabase database = QSqlDatabase::addDatabase("QMYSQL", "information_system_login");
-    database.setHostName("localhost");
+    database.setHostName(mHosteName);
     database.setUserName(login);
     database.setPassword(password);
-    database.setDatabaseName("information_system");
+    database.setDatabaseName(mDatabaseName);
 
     if (!database.open())
     {
