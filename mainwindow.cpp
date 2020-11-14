@@ -170,6 +170,8 @@ void MainWindow::on_pushButton_change_mode_clicked()
         mMain_ui->tableView_data_from_database->setModel(mQueryModel);
         mMain_ui->label_current_mode->setText("You are using reading mode.");
     }
+
+    mMain_ui->statusbar->showMessage("Mode changed!");
 }
 
 void MainWindow::on_pushButton_search_clicked()
@@ -241,16 +243,18 @@ void MainWindow::setup_select_all_tableModel(QSqlTableModel* const tableModel) c
 
 void MainWindow::setup_search_queryModel(QSqlQueryModel* const queryModel, const QString& searchRequest) const
 {
-    queryModel->setQuery("SELECT * FROM `operations` WHERE operation_id = '" + searchRequest + "' OR source_number = '" + searchRequest + "'"
-        "OR destination_number = '" + searchRequest + "' OR sum = '" + searchRequest + "' OR date_time = '" + searchRequest + "'", mDatabase);
+    queryModel->setQuery("SELECT * FROM `operations` WHERE operation_id = '" + searchRequest + "' OR payer_name = '" + searchRequest +
+        "' OR receiver_name = '" + searchRequest + "' OR source_number = '" + searchRequest + "' OR destination_number = '" + searchRequest +
+        "' OR sum = '" + searchRequest + "' OR date_time = '" + searchRequest + "'", mDatabase);
     setup_headers_queryModel(queryModel);
 }
 
 void MainWindow::setup_search_tableModel(QSqlTableModel* const tableModel, const QString& searchRequest) const
 {
     tableModel->setTable("`operations`");
-    tableModel->setFilter("operation_id = '" + searchRequest + "' OR source_number = '" + searchRequest + "'"
-        "OR destination_number = '" + searchRequest + "' OR sum = '" + searchRequest + "' OR date_time = '" + searchRequest + "'");
+    tableModel->setFilter("operation_id = '" + searchRequest + "' OR payer_name = '" + searchRequest + "' OR receiver_name = '" + searchRequest +
+    "' OR source_number = '" + searchRequest + "' OR destination_number = '" + searchRequest + "' OR sum = '" + searchRequest +
+    "' OR date_time = '" + searchRequest + "'");
     tableModel->select();
     setup_headers_tableModel(tableModel);
 }
@@ -258,17 +262,21 @@ void MainWindow::setup_search_tableModel(QSqlTableModel* const tableModel, const
 void MainWindow::setup_headers_queryModel(QSqlQueryModel* const queryModel) const
 {
     queryModel->setHeaderData(0, Qt::Horizontal, tr("Id"));
-    queryModel->setHeaderData(1, Qt::Horizontal, tr("From"));
-    queryModel->setHeaderData(2, Qt::Horizontal, tr("To"));
-    queryModel->setHeaderData(3, Qt::Horizontal, tr("Sum"));
-    queryModel->setHeaderData(4, Qt::Horizontal, tr("Date"));
+    queryModel->setHeaderData(1, Qt::Horizontal, tr("Payer"));
+    queryModel->setHeaderData(2, Qt::Horizontal, tr("Receiver"));
+    queryModel->setHeaderData(3, Qt::Horizontal, tr("Payer account"));
+    queryModel->setHeaderData(4, Qt::Horizontal, tr("Reciever account"));
+    queryModel->setHeaderData(5, Qt::Horizontal, tr("Sum"));
+    queryModel->setHeaderData(6, Qt::Horizontal, tr("Date"));
 }
 
 void MainWindow::setup_headers_tableModel(QSqlTableModel* const tableModel) const
 {
     tableModel->setHeaderData(0, Qt::Horizontal, tr("Id"));
-    tableModel->setHeaderData(1, Qt::Horizontal, tr("From"));
-    tableModel->setHeaderData(2, Qt::Horizontal, tr("To"));
-    tableModel->setHeaderData(3, Qt::Horizontal, tr("Sum"));
-    tableModel->setHeaderData(4, Qt::Horizontal, tr("Date"));
+    tableModel->setHeaderData(1, Qt::Horizontal, tr("Payer"));
+    tableModel->setHeaderData(2, Qt::Horizontal, tr("Receiver"));
+    tableModel->setHeaderData(3, Qt::Horizontal, tr("Payer account"));
+    tableModel->setHeaderData(4, Qt::Horizontal, tr("Reciever account"));
+    tableModel->setHeaderData(5, Qt::Horizontal, tr("Sum"));
+    tableModel->setHeaderData(6, Qt::Horizontal, tr("Date"));
 }

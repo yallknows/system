@@ -10,7 +10,19 @@
     <height>480</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="minimumSize">
+   <size>
+    <width>720</width>
+    <height>480</height>
+   </size>
+  </property>
+  <property name="maximumSize">
    <size>
     <width>720</width>
     <height>480</height>
@@ -83,6 +95,28 @@
 {
 	background-color:rgb(30, 170, 145);
 }
+
+#pushButton_insert_new_record
+{
+  	border-radius:3px;
+	background-color:rgb(140, 140, 140);
+}
+
+#pushButton_insert_new_record:hover
+{
+	background-color:rgb(30, 170, 145);
+}
+
+#pushButton_delete_selected_record
+{
+  	border-radius:3px;
+	background-color:rgb(140, 140, 140);
+}
+
+#pushButton_delete_selected_record:hover
+{
+	background-color:rgb(30, 170, 145);
+}
 </string>
   </property>
   <property name="locale">
@@ -100,10 +134,10 @@
    <widget class="QTableView" name="tableView_data_from_database">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>681</width>
-      <height>301</height>
+      <x>10</x>
+      <y>10</y>
+      <width>700</width>
+      <height>320</height>
      </rect>
     </property>
     <property name="font">
@@ -111,13 +145,46 @@
       <family>Franklin Gothic Medium</family>
      </font>
     </property>
+    <attribute name="horizontalHeaderCascadingSectionResizes">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="horizontalHeaderMinimumSectionSize">
+     <number>99</number>
+    </attribute>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>99</number>
+    </attribute>
+    <attribute name="horizontalHeaderHighlightSections">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="horizontalHeaderStretchLastSection">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="verticalHeaderVisible">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="verticalHeaderMinimumSectionSize">
+     <number>20</number>
+    </attribute>
+    <attribute name="verticalHeaderDefaultSectionSize">
+     <number>20</number>
+    </attribute>
+    <attribute name="verticalHeaderHighlightSections">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="verticalHeaderStretchLastSection">
+     <bool>false</bool>
+    </attribute>
    </widget>
    <widget class="QGroupBox" name="groupBox_actions">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>330</y>
-      <width>371</width>
+      <x>10</x>
+      <y>340</y>
+      <width>501</width>
       <height>91</height>
      </rect>
     </property>
@@ -136,9 +203,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>20</y>
-       <width>161</width>
-       <height>21</height>
+       <y>30</y>
+       <width>160</width>
+       <height>20</height>
       </rect>
      </property>
      <property name="font">
@@ -150,31 +217,13 @@
       <string>Retry database connection</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_change_mode">
-     <property name="geometry">
-      <rect>
-       <x>200</x>
-       <y>20</y>
-       <width>161</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Franklin Gothic Medium</family>
-      </font>
-     </property>
-     <property name="text">
-      <string>Change mode</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="pushButton_search">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>60</y>
-       <width>161</width>
-       <height>21</height>
+       <x>180</x>
+       <y>30</y>
+       <width>160</width>
+       <height>20</height>
       </rect>
      </property>
      <property name="font">
@@ -189,21 +238,47 @@
     <widget class="QLineEdit" name="lineEdit_search_request">
      <property name="geometry">
       <rect>
-       <x>200</x>
-       <y>60</y>
-       <width>161</width>
-       <height>21</height>
+       <x>350</x>
+       <y>30</y>
+       <width>140</width>
+       <height>20</height>
       </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_insert_new_record">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>160</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Insert new record</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_delete_selected_record">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>60</y>
+       <width>160</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Delete selected record</string>
      </property>
     </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_mode">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>330</y>
-      <width>201</width>
-      <height>51</height>
+      <x>530</x>
+      <y>340</y>
+      <width>181</width>
+      <height>90</height>
      </rect>
     </property>
     <property name="font">
@@ -218,9 +293,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>20</y>
-       <width>161</width>
-       <height>16</height>
+       <y>30</y>
+       <width>160</width>
+       <height>15</height>
       </rect>
      </property>
      <property name="font">
@@ -231,6 +306,24 @@
      </property>
      <property name="text">
       <string>You are using reading mode.</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_change_mode">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>160</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Franklin Gothic Medium</family>
+      </font>
+     </property>
+     <property name="text">
+      <string>Change mode</string>
      </property>
     </widget>
    </widget>
