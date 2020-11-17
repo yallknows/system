@@ -49,12 +49,12 @@
   <property name="styleSheet">
    <string notr="true">#centralwidget
 {
-	border-image: url(:/images/src/img/background_mainwindow.jpg);
+	border-image: url(:/images/src/img/background_mainWindow.jpg);
 }
 
 #statusbar
 {
-	border-image: url(:/images/src/img/statusbar_mainwindow.jpg);
+	border-image: url(:/images/src/img/statusbar_mainWindow.jpg);
 }
 
 #tableView_data_from_database
@@ -149,7 +149,7 @@
      <bool>false</bool>
     </attribute>
     <attribute name="horizontalHeaderMinimumSectionSize">
-     <number>99</number>
+     <number>30</number>
     </attribute>
     <attribute name="horizontalHeaderDefaultSectionSize">
      <number>99</number>

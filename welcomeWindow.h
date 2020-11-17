@@ -3,7 +3,7 @@
 #ifndef WELCOMEWINDOW_H
 #define WELCOMEWINDOW_H
 
-#include "mainwindow.h"
+#include "mainWindow.h"
 
 #include <QDialog>
 

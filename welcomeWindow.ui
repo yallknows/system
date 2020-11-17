@@ -39,12 +39,12 @@
   <property name="styleSheet">
    <string notr="true">#widget_background
 {
-	border-image: url(:/images/src/img/background_welcomewindow.jpg);
+	border-image: url(:/images/src/img/background_welcomeWindow.jpg);
 }
 
 #widget_statusbar
 {
-	border-image: url(:/images/src/img/statusbar_welcomewindow.jpg);
+	border-image: url(:/images/src/img/statusbar_welcomeWindow.jpg);
 }
 
 #pushButton_login
@@ -55,7 +55,7 @@
 
 #pushButton_login:hover
 {
-	background-color:rgb(30, 170, 145);
+	background-color:rgb(60, 150, 150);
 }
 </string>
   </property>

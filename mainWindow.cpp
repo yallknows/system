@@ -1,5 +1,5 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "mainWindow.h"
+#include "ui_mainWindow.h"
 
 MainWindow::MainWindow(const QString& databaseLogin, const QString& databasePassword, QWidget* parent)
     : QMainWindow(parent), mMain_ui(new Ui::MainWindow), mDatabaseLogin(databaseLogin), mDatabasePassword(databasePassword)
@@ -31,6 +31,12 @@ MainWindow::~MainWindow()
     {
         delete mMain_ui;
         mMain_ui = nullptr;
+    }
+
+    if (mAddNewItemWindow != nullptr)
+    {
+        delete mAddNewItemWindow;
+        mAddNewItemWindow = nullptr;
     }
 
     if (mDatabase.open())
@@ -226,6 +232,18 @@ void MainWindow::on_pushButton_search_clicked()
 
         mMain_ui->tableView_data_from_database->setModel(mTableModel);
     }
+}
+
+void MainWindow::on_pushButton_insert_new_record_clicked()
+{
+    if (mAddNewItemWindow != nullptr)
+    {
+        delete mAddNewItemWindow;
+        mAddNewItemWindow = nullptr;
+    }
+
+    mAddNewItemWindow = new AddNewItemWindow;
+    mAddNewItemWindow->show();
 }
 
 void MainWindow::setup_select_all_queryModel(QSqlQueryModel* const queryModel) const

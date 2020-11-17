@@ -1,9 +1,11 @@
 <RCC>
     <qresource prefix="/images">
         <file>src/img/icon.png</file>
-        <file>src/img/background_mainwindow.jpg</file>
-        <file>src/img/statusbar_mainwindow.jpg</file>
-        <file>src/img/background_welcomewindow.jpg</file>
-        <file>src/img/statusbar_welcomewindow.jpg</file>
+        <file>src/img/background_mainWindow.jpg</file>
+        <file>src/img/statusbar_mainWindow.jpg</file>
+        <file>src/img/background_welcomeWindow.jpg</file>
+        <file>src/img/statusbar_welcomeWindow.jpg</file>
+        <file>src/img/background_addNewItemWindow.jpg</file>
+        <file>src/img/statusbar_addNewItemWindow.jpg</file>
     </qresource>
 </RCC>

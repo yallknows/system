@@ -1,4 +1,4 @@
-#include "welcomewindow.h"
+#include "welcomeWindow.h"
 
 #include <QApplication>
 

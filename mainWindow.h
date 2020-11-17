@@ -3,6 +3,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "addNewItemWindow.h"
+
 #include <QMainWindow>
 
 #include <QtSql>
@@ -27,6 +29,8 @@ private slots:
 
     void on_pushButton_search_clicked();
 
+    void on_pushButton_insert_new_record_clicked();
+
 private:
     void setup_select_all_queryModel(QSqlQueryModel* const queryModel) const;
     void setup_select_all_tableModel(QSqlTableModel* const tableModel) const;
@@ -38,6 +42,7 @@ private:
     void setup_headers_tableModel(QSqlTableModel* const tableModel) const;
 
     Ui::MainWindow* mMain_ui = nullptr;
+    AddNewItemWindow* mAddNewItemWindow = nullptr;
 
     QSqlQueryModel* mQueryModel = nullptr;
     QSqlTableModel* mTableModel = nullptr;

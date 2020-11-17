@@ -1,5 +1,5 @@
-#include "welcomewindow.h"
-#include "ui_welcomewindow.h"
+#include "welcomeWindow.h"
+#include "ui_welcomeWindow.h"
 
 #include <QtSql>
 
@@ -58,4 +58,10 @@ void WelcomeWindow::on_pushButton_login_clicked()
     hide();
     mMainWindow = new MainWindow(login, password);
     mMainWindow->show();
+
+    if (mWelcome_ui != nullptr)
+    {
+        delete mWelcome_ui;
+        mWelcome_ui = nullptr;
+    }
 }
