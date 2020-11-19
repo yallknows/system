@@ -1,6 +1,8 @@
 #include "mainWindow.h"
 #include "ui_mainWindow.h"
 
+#include <thread>
+
 MainWindow::MainWindow(const QString& databaseLogin, const QString& databasePassword, QWidget* parent)
     : QMainWindow(parent), mMain_ui(new Ui::MainWindow), mDatabaseLogin(databaseLogin), mDatabasePassword(databasePassword)
 {
@@ -57,7 +59,7 @@ MainWindow::~MainWindow()
     }
 }
 
-void MainWindow::on_pushButton_retry_database_connection_clicked()
+void MainWindow::on_pushButton_update_database_clicked()
 {
     if (mDatabase.open())
     {
@@ -242,7 +244,9 @@ void MainWindow::on_pushButton_insert_new_record_clicked()
         mAddNewItemWindow = nullptr;
     }
 
-    mAddNewItemWindow = new AddNewItemWindow;
+    QString payer, receiver, payerAccount, receiverAccount, sum, date;
+
+    mAddNewItemWindow = new AddNewItemWindow(mHosteName, mDatabaseLogin, mDatabasePassword, mDatabaseName);
     mAddNewItemWindow->show();
 }
 

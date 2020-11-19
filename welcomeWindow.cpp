@@ -55,7 +55,8 @@ void WelcomeWindow::on_pushButton_login_clicked()
 
     database.close();
 
-    hide();
+    close();
+
     mMainWindow = new MainWindow(login, password);
     mMainWindow->show();
 

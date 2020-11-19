@@ -22,8 +22,17 @@
     <height>300</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <family>Franklin Gothic Medium</family>
+   </font>
+  </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Information system add new item</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="sources.qrc">
+    <normaloff>:/images/src/img/icon.png</normaloff>:/images/src/img/icon.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">#widget_background
@@ -95,8 +104,8 @@
       <rect>
        <x>100</x>
        <y>180</y>
-       <width>131</width>
-       <height>22</height>
+       <width>130</width>
+       <height>20</height>
       </rect>
      </property>
      <property name="dateTime">
@@ -109,14 +118,23 @@
        <day>1</day>
       </datetime>
      </property>
+     <property name="currentSection">
+      <enum>QDateTimeEdit::YearSection</enum>
+     </property>
+     <property name="displayFormat">
+      <string>yyyy-MM-dd H:mm:ss</string>
+     </property>
+     <property name="calendarPopup">
+      <bool>true</bool>
+     </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_payer">
      <property name="geometry">
       <rect>
        <x>100</x>
        <y>30</y>
-       <width>131</width>
-       <height>21</height>
+       <width>130</width>
+       <height>20</height>
       </rect>
      </property>
     </widget>
@@ -125,8 +143,8 @@
       <rect>
        <x>100</x>
        <y>60</y>
-       <width>131</width>
-       <height>21</height>
+       <width>130</width>
+       <height>20</height>
       </rect>
      </property>
     </widget>
@@ -135,8 +153,8 @@
       <rect>
        <x>100</x>
        <y>150</y>
-       <width>131</width>
-       <height>21</height>
+       <width>130</width>
+       <height>20</height>
       </rect>
      </property>
     </widget>
@@ -145,8 +163,8 @@
       <rect>
        <x>100</x>
        <y>90</y>
-       <width>131</width>
-       <height>21</height>
+       <width>130</width>
+       <height>20</height>
       </rect>
      </property>
     </widget>
@@ -155,8 +173,8 @@
       <rect>
        <x>100</x>
        <y>120</y>
-       <width>131</width>
-       <height>21</height>
+       <width>130</width>
+       <height>20</height>
       </rect>
      </property>
     </widget>
@@ -319,6 +337,8 @@
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="sources.qrc"/>
+ </resources>
  <connections/>
 </ui>

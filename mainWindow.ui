@@ -63,13 +63,13 @@
 	background-color:rgb(234, 255, 228);
 }
 
-#pushButton_retry_database_connection
+#pushButton_update_database
 {
 	border-radius:3px;
 	background-color:rgb(140, 140, 140);
 }
 
-#pushButton_retry_database_connection:hover
+#pushButton_update_database:hover
 {
 	background-color:rgb(30, 170, 145);
 }
@@ -199,7 +199,7 @@
     <property name="title">
      <string>Actions</string>
     </property>
-    <widget class="QPushButton" name="pushButton_retry_database_connection">
+    <widget class="QPushButton" name="pushButton_update_database">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -214,7 +214,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Retry database connection</string>
+      <string>Update database</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_search">

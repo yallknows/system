@@ -23,7 +23,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_retry_database_connection_clicked();
+    void on_pushButton_update_database_clicked();
 
     void on_pushButton_change_mode_clicked();
 
@@ -47,7 +47,7 @@ private:
     QSqlQueryModel* mQueryModel = nullptr;
     QSqlTableModel* mTableModel = nullptr;
 
-    QString mHosteName = "localhost", mDatabaseName = "information_system", mDatabaseLogin, mDatabasePassword;
+    QString mHosteName = "localhost", mDatabaseLogin, mDatabasePassword, mDatabaseName = "information_system";
     QSqlDatabase mDatabase;
 };
 
