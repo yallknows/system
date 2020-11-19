@@ -31,6 +31,8 @@ private slots:
 
     void on_pushButton_insert_new_record_clicked();
 
+    void on_pushButton_delete_selected_item_clicked();
+
 private:
     void setup_select_all_queryModel(QSqlQueryModel* const queryModel) const;
     void setup_select_all_tableModel(QSqlTableModel* const tableModel) const;

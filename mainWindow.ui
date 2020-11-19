@@ -107,13 +107,13 @@
 	background-color:rgb(30, 170, 145);
 }
 
-#pushButton_delete_selected_record
+#pushButton_delete_selected_item
 {
   	border-radius:3px;
 	background-color:rgb(140, 140, 140);
 }
 
-#pushButton_delete_selected_record:hover
+#pushButton_delete_selected_item:hover
 {
 	background-color:rgb(30, 170, 145);
 }
@@ -144,6 +144,15 @@
      <font>
       <family>Franklin Gothic Medium</family>
      </font>
+    </property>
+    <property name="alternatingRowColors">
+     <bool>true</bool>
+    </property>
+    <property name="selectionMode">
+     <enum>QAbstractItemView::SingleSelection</enum>
+    </property>
+    <property name="selectionBehavior">
+     <enum>QAbstractItemView::SelectRows</enum>
     </property>
     <attribute name="horizontalHeaderCascadingSectionResizes">
      <bool>false</bool>
@@ -258,7 +267,7 @@
       <string>Insert new record</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_delete_selected_record">
+    <widget class="QPushButton" name="pushButton_delete_selected_item">
      <property name="geometry">
       <rect>
        <x>180</x>
@@ -268,7 +277,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Delete selected record</string>
+      <string>Delete selected item</string>
      </property>
     </widget>
    </widget>

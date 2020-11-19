@@ -248,6 +248,34 @@ void MainWindow::on_pushButton_insert_new_record_clicked()
 
     mAddNewItemWindow = new AddNewItemWindow(mHosteName, mDatabaseLogin, mDatabasePassword, mDatabaseName);
     mAddNewItemWindow->show();
+
+    mMain_ui->statusbar->showMessage("Refresh the connection!");
+}
+
+void MainWindow::on_pushButton_delete_selected_item_clicked()
+{
+    if (!mMain_ui->tableView_data_from_database->selectionModel()->hasSelection())
+    {
+        mMain_ui->statusbar->showMessage("Select the item to remove!");
+        return;
+    }
+
+    QModelIndexList selection = mMain_ui->tableView_data_from_database->selectionModel()->selectedRows();
+    QModelIndex selectedIndex = selection.at(0);
+    QString removableId = mMain_ui->tableView_data_from_database->model()->index(selectedIndex.row(), 0).data().toString();
+
+    QSqlQuery query(mDatabase);
+    query.prepare("DELETE FROM `operations` WHERE operation_id='" + removableId + "'");
+
+    if (!query.exec())
+    {
+        mMain_ui->statusbar->showMessage("Failed to delete item!");
+    }
+    else
+    {
+        on_pushButton_update_database_clicked();
+        mMain_ui->statusbar->showMessage("Item deleted successfully!");
+    }
 }
 
 void MainWindow::setup_select_all_queryModel(QSqlQueryModel* const queryModel) const

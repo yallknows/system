@@ -79,7 +79,7 @@ void AddNewItemWindow::on_pushButton_addItem_clicked()
     }
 
     QSqlQuery query(mDatabase);
-    query.prepare("INSERT INTO operations (payer_name, receiver_name, source_number,"
+    query.prepare("INSERT INTO `operations` (payer_name, receiver_name, source_number,"
         " destination_number, sum, date_time) VALUES (?, ?, ?, ?, ?, ?)");
 
     query.addBindValue(payer);
@@ -91,7 +91,7 @@ void AddNewItemWindow::on_pushButton_addItem_clicked()
 
     if (!query.exec())
     {
-        mAddNewItem_ui->label_statusbar->setText("Error while adding!");
+        mAddNewItem_ui->label_statusbar->setText("Failed to add item!");
     }
     else
     {
