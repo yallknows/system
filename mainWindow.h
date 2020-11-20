@@ -19,7 +19,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(const QString& databaseLogin, const QString& databasePassword, QWidget* parent = nullptr);
+    MainWindow(const QString& hosteName, const QString& databaseLogin, const QString& databasePassword,
+        const QString& databaseName, QWidget* parent = nullptr);
     ~MainWindow();
 
 private slots:
@@ -51,7 +52,7 @@ private:
 
     QSortFilterProxyModel* mSortFilterProxyModel = nullptr;
 
-    QString mHosteName = "localhost", mDatabaseLogin, mDatabasePassword, mDatabaseName = "information_system";
+    QString mHosteName, mDatabaseLogin, mDatabasePassword, mDatabaseName;
     QSqlDatabase mDatabase;
 };
 

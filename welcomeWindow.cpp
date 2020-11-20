@@ -54,10 +54,9 @@ void WelcomeWindow::on_pushButton_login_clicked()
     }
 
     database.close();
-
     close();
 
-    mMainWindow = new MainWindow(login, password);
+    mMainWindow = new MainWindow(mHosteName, login, password, mDatabaseName);
     mMainWindow->show();
 
     if (mWelcome_ui != nullptr)
