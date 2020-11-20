@@ -49,6 +49,8 @@ private:
     QSqlQueryModel* mQueryModel = nullptr;
     QSqlTableModel* mTableModel = nullptr;
 
+    QSortFilterProxyModel* mSortFilterProxyModel = nullptr;
+
     QString mHosteName = "localhost", mDatabaseLogin, mDatabasePassword, mDatabaseName = "information_system";
     QSqlDatabase mDatabase;
 };

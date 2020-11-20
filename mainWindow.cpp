@@ -1,8 +1,6 @@
 #include "mainWindow.h"
 #include "ui_mainWindow.h"
 
-#include <thread>
-
 MainWindow::MainWindow(const QString& databaseLogin, const QString& databasePassword, QWidget* parent)
     : QMainWindow(parent), mMain_ui(new Ui::MainWindow), mDatabaseLogin(databaseLogin), mDatabasePassword(databasePassword)
 {
@@ -24,7 +22,11 @@ MainWindow::MainWindow(const QString& databaseLogin, const QString& databasePass
 
     mQueryModel = new QSqlQueryModel();
     setup_select_all_queryModel(mQueryModel);
-    mMain_ui->tableView_data_from_database->setModel(mQueryModel);
+
+    mSortFilterProxyModel = new QSortFilterProxyModel();
+    mSortFilterProxyModel->setSourceModel(mQueryModel);
+
+    mMain_ui->tableView_data_from_database->setModel(mSortFilterProxyModel);
 }
 
 MainWindow::~MainWindow()
@@ -57,6 +59,12 @@ MainWindow::~MainWindow()
         delete mTableModel;
         mTableModel = nullptr;
     }
+
+    if (mSortFilterProxyModel != nullptr)
+    {
+        delete mSortFilterProxyModel;
+        mSortFilterProxyModel = nullptr;
+    }
 }
 
 void MainWindow::on_pushButton_update_database_clicked()
@@ -80,6 +88,12 @@ void MainWindow::on_pushButton_update_database_clicked()
 
     mMain_ui->statusbar->showMessage("Database succesfully connected!");
 
+    if (mSortFilterProxyModel != nullptr)
+    {
+        delete mSortFilterProxyModel;
+        mSortFilterProxyModel = nullptr;
+    }
+
     if (mMain_ui->label_current_mode->text() == "You are using reading mode.")
     {
         if (mQueryModel != nullptr)
@@ -95,13 +109,19 @@ void MainWindow::on_pushButton_update_database_clicked()
         if (searchRequest.size() > 0)
         {
             setup_search_queryModel(mQueryModel, searchRequest);
+
+            mSortFilterProxyModel = new QSortFilterProxyModel();
+            mSortFilterProxyModel->setSourceModel(mQueryModel);
         }
         else
         {
             setup_select_all_queryModel(mQueryModel);
+
+            mSortFilterProxyModel = new QSortFilterProxyModel();
+            mSortFilterProxyModel->setSourceModel(mQueryModel);
         }
 
-        mMain_ui->tableView_data_from_database->setModel(mQueryModel);
+        mMain_ui->tableView_data_from_database->setModel(mSortFilterProxyModel);
     }
     else if (mMain_ui->label_current_mode->text() == "You are using edit mode.")
     {
@@ -118,13 +138,19 @@ void MainWindow::on_pushButton_update_database_clicked()
         if (searchRequest.size() > 0)
         {
             setup_search_tableModel(mTableModel, searchRequest);
+
+            mSortFilterProxyModel = new QSortFilterProxyModel();
+            mSortFilterProxyModel->setSourceModel(mTableModel);
         }
         else
         {
             setup_select_all_tableModel(mTableModel);
+
+            mSortFilterProxyModel = new QSortFilterProxyModel();
+            mSortFilterProxyModel->setSourceModel(mTableModel);
         }
 
-        mMain_ui->tableView_data_from_database->setModel(mTableModel);
+        mMain_ui->tableView_data_from_database->setModel(mSortFilterProxyModel);
     }
 }
 
@@ -138,6 +164,12 @@ void MainWindow::on_pushButton_change_mode_clicked()
             mQueryModel = nullptr;
         }
 
+        if (mSortFilterProxyModel != nullptr)
+        {
+            delete mSortFilterProxyModel;
+            mSortFilterProxyModel = nullptr;
+        }
+
         mTableModel = new QSqlTableModel(nullptr, mDatabase);
 
         QString searchRequest = mMain_ui->lineEdit_search_request->text();
@@ -145,13 +177,19 @@ void MainWindow::on_pushButton_change_mode_clicked()
         if (searchRequest.size() > 0)
         {
             setup_search_tableModel(mTableModel, searchRequest);
+
+            mSortFilterProxyModel = new QSortFilterProxyModel();
+            mSortFilterProxyModel->setSourceModel(mTableModel);
         }
         else
         {
             setup_select_all_tableModel(mTableModel);
+
+            mSortFilterProxyModel = new QSortFilterProxyModel();
+            mSortFilterProxyModel->setSourceModel(mTableModel);
         }
 
-        mMain_ui->tableView_data_from_database->setModel(mTableModel);
+        mMain_ui->tableView_data_from_database->setModel(mSortFilterProxyModel);
         mMain_ui->label_current_mode->setText("You are using edit mode.");
     }
     else if (mMain_ui->label_current_mode->text() == "You are using edit mode.")
@@ -162,6 +200,12 @@ void MainWindow::on_pushButton_change_mode_clicked()
             mTableModel = nullptr;
         }
 
+        if (mSortFilterProxyModel != nullptr)
+        {
+            delete mSortFilterProxyModel;
+            mSortFilterProxyModel = nullptr;
+        }
+
         mQueryModel = new QSqlQueryModel();
 
         QString searchRequest = mMain_ui->lineEdit_search_request->text();
@@ -169,13 +213,19 @@ void MainWindow::on_pushButton_change_mode_clicked()
         if (searchRequest.size() > 0)
         {
             setup_search_queryModel(mQueryModel, searchRequest);
+
+            mSortFilterProxyModel = new QSortFilterProxyModel();
+            mSortFilterProxyModel->setSourceModel(mQueryModel);
         }
         else
         {
             setup_select_all_queryModel(mQueryModel);
+
+            mSortFilterProxyModel = new QSortFilterProxyModel();
+            mSortFilterProxyModel->setSourceModel(mQueryModel);
         }
 
-        mMain_ui->tableView_data_from_database->setModel(mQueryModel);
+        mMain_ui->tableView_data_from_database->setModel(mSortFilterProxyModel);
         mMain_ui->label_current_mode->setText("You are using reading mode.");
     }
 
@@ -192,6 +242,12 @@ void MainWindow::on_pushButton_search_clicked()
             mQueryModel = nullptr;
         }
 
+        if (mSortFilterProxyModel != nullptr)
+        {
+            delete mSortFilterProxyModel;
+            mSortFilterProxyModel = nullptr;
+        }
+
         mQueryModel = new QSqlQueryModel();
 
         QString searchRequest = mMain_ui->lineEdit_search_request->text();
@@ -199,15 +255,21 @@ void MainWindow::on_pushButton_search_clicked()
         if (searchRequest.size() > 0)
         {
             setup_search_queryModel(mQueryModel, searchRequest);
+
+            mSortFilterProxyModel = new QSortFilterProxyModel();
+            mSortFilterProxyModel->setSourceModel(mQueryModel);
             mMain_ui->statusbar->showMessage("Found the following entries!");
         }
         else
         {
             setup_select_all_queryModel(mQueryModel);
+
+            mSortFilterProxyModel = new QSortFilterProxyModel();
+            mSortFilterProxyModel->setSourceModel(mQueryModel);
             mMain_ui->statusbar->showMessage("Search field is empty!");
         }
 
-        mMain_ui->tableView_data_from_database->setModel(mQueryModel);
+        mMain_ui->tableView_data_from_database->setModel(mSortFilterProxyModel);
     }
     else if (mMain_ui->label_current_mode->text() == "You are using edit mode.")
     {
@@ -217,6 +279,12 @@ void MainWindow::on_pushButton_search_clicked()
             mTableModel = nullptr;
         }
 
+        if (mSortFilterProxyModel != nullptr)
+        {
+            delete mSortFilterProxyModel;
+            mSortFilterProxyModel = nullptr;
+        }
+
         mTableModel = new QSqlTableModel(nullptr, mDatabase);
 
         QString searchRequest = mMain_ui->lineEdit_search_request->text();
@@ -224,15 +292,21 @@ void MainWindow::on_pushButton_search_clicked()
         if (searchRequest.size() > 0)
         {
             setup_search_tableModel(mTableModel, searchRequest);
+
+            mSortFilterProxyModel = new QSortFilterProxyModel();
+            mSortFilterProxyModel->setSourceModel(mTableModel);
             mMain_ui->statusbar->showMessage("Found the following entries!");
         }
         else
         {
             setup_select_all_tableModel(mTableModel);
+
+            mSortFilterProxyModel = new QSortFilterProxyModel();
+            mSortFilterProxyModel->setSourceModel(mTableModel);
             mMain_ui->statusbar->showMessage("Search field is empty!");
         }
 
-        mMain_ui->tableView_data_from_database->setModel(mTableModel);
+        mMain_ui->tableView_data_from_database->setModel(mSortFilterProxyModel);
     }
 }
 
