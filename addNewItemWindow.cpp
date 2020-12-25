@@ -95,13 +95,13 @@ void AddNewItemWindow::on_pushButton_addItem_clicked()
     }
     else
     {
-        mAddNewItem_ui->label_statusbar->setText("Item added successfully!");
-
         mAddNewItem_ui->lineEdit_payer->setText("");
         mAddNewItem_ui->lineEdit_receiver->setText("");
         mAddNewItem_ui->lineEdit_payerAccount->setText("");
         mAddNewItem_ui->lineEdit_receiverAccount->setText("");
         mAddNewItem_ui->lineEdit_sum->setText("");
+
+        mAddNewItem_ui->label_statusbar->setText("Item added successfully!");
     }
 }
 

@@ -89,6 +89,8 @@ void MainWindow::on_pushButton_update_database_clicked()
 
     mMain_ui->statusbar->showMessage("Database succesfully connected!");
 
+    QString searchRequest = mMain_ui->lineEdit_search_request->text();
+
     if (mMain_ui->label_current_mode->text() == "You are using reading mode.")
     {
         if (mQueryModel != nullptr)
@@ -99,19 +101,16 @@ void MainWindow::on_pushButton_update_database_clicked()
 
         mQueryModel = new QSqlQueryModel();
 
-        QString searchRequest = mMain_ui->lineEdit_search_request->text();
-
-        if (searchRequest.size() > 0)
+        if (searchRequest.size() == 0)
         {
-            setup_search_queryModel(mQueryModel, searchRequest);
-            mSortFilterProxyModel->setSourceModel(mQueryModel);
+            setup_select_all_queryModel(mQueryModel);
         }
         else
         {
-            setup_select_all_queryModel(mQueryModel);
-            mSortFilterProxyModel->setSourceModel(mQueryModel);
+            setup_search_queryModel(mQueryModel, searchRequest);
         }
 
+        mSortFilterProxyModel->setSourceModel(mQueryModel);
         mMain_ui->tableView_data_from_database->setModel(mSortFilterProxyModel);
     }
     else if (mMain_ui->label_current_mode->text() == "You are using edit mode.")
@@ -124,25 +123,25 @@ void MainWindow::on_pushButton_update_database_clicked()
 
         mTableModel = new QSqlTableModel(nullptr, mDatabase);
 
-        QString searchRequest = mMain_ui->lineEdit_search_request->text();
-
-        if (searchRequest.size() > 0)
+        if (searchRequest.size() == 0)
         {
-            setup_search_tableModel(mTableModel, searchRequest);
-            mSortFilterProxyModel->setSourceModel(mTableModel);
+            setup_select_all_tableModel(mTableModel);
         }
         else
         {
-            setup_select_all_tableModel(mTableModel);
-            mSortFilterProxyModel->setSourceModel(mTableModel);
+
+            setup_search_tableModel(mTableModel, searchRequest);
         }
 
+        mSortFilterProxyModel->setSourceModel(mTableModel);
         mMain_ui->tableView_data_from_database->setModel(mSortFilterProxyModel);
     }
 }
 
 void MainWindow::on_pushButton_change_mode_clicked()
 {
+    QString searchRequest = mMain_ui->lineEdit_search_request->text();
+
     if (mMain_ui->label_current_mode->text() == "You are using reading mode.")
     {
         if (mQueryModel != nullptr)
@@ -153,19 +152,16 @@ void MainWindow::on_pushButton_change_mode_clicked()
 
         mTableModel = new QSqlTableModel(nullptr, mDatabase);
 
-        QString searchRequest = mMain_ui->lineEdit_search_request->text();
-
-        if (searchRequest.size() > 0)
+        if (searchRequest.size() == 0)
         {
-            setup_search_tableModel(mTableModel, searchRequest);
-            mSortFilterProxyModel->setSourceModel(mTableModel);
+            setup_select_all_tableModel(mTableModel);
         }
         else
         {
-            setup_select_all_tableModel(mTableModel);
-            mSortFilterProxyModel->setSourceModel(mTableModel);
+            setup_search_tableModel(mTableModel, searchRequest);
         }
 
+        mSortFilterProxyModel->setSourceModel(mTableModel);
         mMain_ui->tableView_data_from_database->setModel(mSortFilterProxyModel);
         mMain_ui->label_current_mode->setText("You are using edit mode.");
     }
@@ -179,19 +175,16 @@ void MainWindow::on_pushButton_change_mode_clicked()
 
         mQueryModel = new QSqlQueryModel();
 
-        QString searchRequest = mMain_ui->lineEdit_search_request->text();
-
-        if (searchRequest.size() > 0)
+        if (searchRequest.size() == 0)
         {
-            setup_search_queryModel(mQueryModel, searchRequest);
-            mSortFilterProxyModel->setSourceModel(mQueryModel);
+            setup_select_all_queryModel(mQueryModel);
         }
         else
         {
-            setup_select_all_queryModel(mQueryModel);
-            mSortFilterProxyModel->setSourceModel(mQueryModel);
+            setup_search_queryModel(mQueryModel, searchRequest);
         }
 
+        mSortFilterProxyModel->setSourceModel(mQueryModel);
         mMain_ui->tableView_data_from_database->setModel(mSortFilterProxyModel);
         mMain_ui->label_current_mode->setText("You are using reading mode.");
     }
@@ -201,6 +194,8 @@ void MainWindow::on_pushButton_change_mode_clicked()
 
 void MainWindow::on_pushButton_search_clicked()
 {
+    QString searchRequest = mMain_ui->lineEdit_search_request->text();
+
     if (mMain_ui->label_current_mode->text() == "You are using reading mode.")
     {
         if (mQueryModel != nullptr)
@@ -211,21 +206,18 @@ void MainWindow::on_pushButton_search_clicked()
 
         mQueryModel = new QSqlQueryModel();
 
-        QString searchRequest = mMain_ui->lineEdit_search_request->text();
-
-        if (searchRequest.size() > 0)
+        if (searchRequest.size() == 0)
         {
-            setup_search_queryModel(mQueryModel, searchRequest);
-            mSortFilterProxyModel->setSourceModel(mQueryModel);
-            mMain_ui->statusbar->showMessage("Found the following entries!");
+            setup_select_all_queryModel(mQueryModel);
+            mMain_ui->statusbar->showMessage("Search field is empty!");
         }
         else
         {
-            setup_select_all_queryModel(mQueryModel);
-            mSortFilterProxyModel->setSourceModel(mQueryModel);
-            mMain_ui->statusbar->showMessage("Search field is empty!");
+            setup_search_queryModel(mQueryModel, searchRequest);
+            mMain_ui->statusbar->showMessage("Found the following entries!");
         }
 
+        mSortFilterProxyModel->setSourceModel(mQueryModel);
         mMain_ui->tableView_data_from_database->setModel(mSortFilterProxyModel);
     }
     else if (mMain_ui->label_current_mode->text() == "You are using edit mode.")
@@ -238,21 +230,18 @@ void MainWindow::on_pushButton_search_clicked()
 
         mTableModel = new QSqlTableModel(nullptr, mDatabase);
 
-        QString searchRequest = mMain_ui->lineEdit_search_request->text();
-
-        if (searchRequest.size() > 0)
+        if (searchRequest.size() == 0)
         {
-            setup_search_tableModel(mTableModel, searchRequest);
-            mSortFilterProxyModel->setSourceModel(mTableModel);
-            mMain_ui->statusbar->showMessage("Found the following entries!");
+            setup_select_all_tableModel(mTableModel);
+            mMain_ui->statusbar->showMessage("Search field is empty!");
         }
         else
         {
-            setup_select_all_tableModel(mTableModel);
-            mSortFilterProxyModel->setSourceModel(mTableModel);
-            mMain_ui->statusbar->showMessage("Search field is empty!");
+            setup_search_tableModel(mTableModel, searchRequest);
+            mMain_ui->statusbar->showMessage("Found the following entries!");
         }
 
+        mSortFilterProxyModel->setSourceModel(mTableModel);
         mMain_ui->tableView_data_from_database->setModel(mSortFilterProxyModel);
     }
 }
@@ -264,8 +253,6 @@ void MainWindow::on_pushButton_insert_new_record_clicked()
         delete mAddNewItemWindow;
         mAddNewItemWindow = nullptr;
     }
-
-    QString payer, receiver, payerAccount, receiverAccount, sum, date;
 
     mAddNewItemWindow = new AddNewItemWindow(mHosteName, mDatabaseLogin, mDatabasePassword, mDatabaseName);
     mAddNewItemWindow->show();
@@ -312,20 +299,27 @@ void MainWindow::setup_select_all_tableModel(QSqlTableModel* const tableModel) c
     setup_headers_tableModel(tableModel);
 }
 
-void MainWindow::setup_search_queryModel(QSqlQueryModel* const queryModel, const QString& searchRequest) const
+void MainWindow::setup_search_queryModel(QSqlQueryModel* const queryModel,
+    const QString& searchRequest) const
 {
-    queryModel->setQuery("SELECT * FROM `operations` WHERE operation_id = '" + searchRequest + "' OR payer_name = '" + searchRequest +
-        "' OR receiver_name = '" + searchRequest + "' OR source_number = '" + searchRequest + "' OR destination_number = '" + searchRequest +
-        "' OR sum = '" + searchRequest + "' OR date_time = '" + searchRequest + "'", mDatabase);
+    queryModel->setQuery("SELECT * FROM `operations` WHERE operation_id = '"
+        + searchRequest + "' OR payer_name = '" + searchRequest
+        + "' OR receiver_name = '" + searchRequest + "' OR source_number = '"
+        + searchRequest + "' OR destination_number = '" + searchRequest
+        + "' OR sum = '" + searchRequest + "' OR date_time = '" + searchRequest
+        + "'", mDatabase);
     setup_headers_queryModel(queryModel);
 }
 
-void MainWindow::setup_search_tableModel(QSqlTableModel* const tableModel, const QString& searchRequest) const
+void MainWindow::setup_search_tableModel(QSqlTableModel* const tableModel,
+    const QString& searchRequest) const
 {
     tableModel->setTable("`operations`");
-    tableModel->setFilter("operation_id = '" + searchRequest + "' OR payer_name = '" + searchRequest + "' OR receiver_name = '" + searchRequest +
-    "' OR source_number = '" + searchRequest + "' OR destination_number = '" + searchRequest + "' OR sum = '" + searchRequest +
-    "' OR date_time = '" + searchRequest + "'");
+    tableModel->setFilter("operation_id = '" + searchRequest + "' OR payer_name = '"
+        + searchRequest + "' OR receiver_name = '" + searchRequest
+        + "' OR source_number = '" + searchRequest + "' OR destination_number = '"
+        + searchRequest + "' OR sum = '" + searchRequest
+        + "' OR date_time = '" + searchRequest + "'");
     tableModel->select();
     setup_headers_tableModel(tableModel);
 }
