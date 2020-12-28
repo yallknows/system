@@ -129,7 +129,6 @@ void MainWindow::on_pushButton_update_database_clicked()
         }
         else
         {
-
             setup_search_tableModel(mTableModel, searchRequest);
         }
 
@@ -196,6 +195,12 @@ void MainWindow::on_pushButton_search_clicked()
 {
     QString searchRequest = mMain_ui->lineEdit_search_request->text();
 
+    if (searchRequest.size() == 0)
+    {
+        mMain_ui->statusbar->showMessage("Search field is empty!");
+        return;
+    }
+
     if (mMain_ui->label_current_mode->text() == "You are using reading mode.")
     {
         if (mQueryModel != nullptr)
@@ -205,18 +210,7 @@ void MainWindow::on_pushButton_search_clicked()
         }
 
         mQueryModel = new QSqlQueryModel();
-
-        if (searchRequest.size() == 0)
-        {
-            setup_select_all_queryModel(mQueryModel);
-            mMain_ui->statusbar->showMessage("Search field is empty!");
-        }
-        else
-        {
-            setup_search_queryModel(mQueryModel, searchRequest);
-            mMain_ui->statusbar->showMessage("Found the following entries!");
-        }
-
+        setup_search_queryModel(mQueryModel, searchRequest);
         mSortFilterProxyModel->setSourceModel(mQueryModel);
         mMain_ui->tableView_data_from_database->setModel(mSortFilterProxyModel);
     }
@@ -229,21 +223,12 @@ void MainWindow::on_pushButton_search_clicked()
         }
 
         mTableModel = new QSqlTableModel(nullptr, mDatabase);
-
-        if (searchRequest.size() == 0)
-        {
-            setup_select_all_tableModel(mTableModel);
-            mMain_ui->statusbar->showMessage("Search field is empty!");
-        }
-        else
-        {
-            setup_search_tableModel(mTableModel, searchRequest);
-            mMain_ui->statusbar->showMessage("Found the following entries!");
-        }
-
+        setup_search_tableModel(mTableModel, searchRequest);
         mSortFilterProxyModel->setSourceModel(mTableModel);
         mMain_ui->tableView_data_from_database->setModel(mSortFilterProxyModel);
     }
+
+    mMain_ui->statusbar->showMessage("Found the following entries!");
 }
 
 void MainWindow::on_pushButton_insert_new_record_clicked()
